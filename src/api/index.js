@@ -96,41 +96,37 @@ export function EditNoteAPI(id,note_title, date_time, note_content, successActio
             console.log(error)
         });
 }
-export function EditCustomersUpdateTime(id,update_time, access_token, successAction) {
-    const Url = `${SERVER_BASE_URL}/customers/${id}`;
-    console.log('url', Url)
-    const objfetch = {
-        update_time
-    }
+// export function DeleteUser(id,access_token,successAction) {
+//     const Url = `${SERVER_BASE_URL}/customers/${id}`;
+//     fetch(Url,
+//         {
+//             method: "DELETE",
+//             headers: {
+//                 Accept: 'application/json',
+//                 'Content-Type': 'application/json',
+//                 'access_token': `${access_token}`
+//             },
+//         })
+//         .then(res => res.json())
+//         .then(response => {
+
+//             successAction(response)
+
+//         })
+//         .catch(error => {
+//             console.log(error)
+//         });
+// }
+
+export function GetWeather(address,successAction) {
+    console.log("address",address)
+    const Url = `http://api.weatherstack.com/current?access_key=f43d304628f460b006b4ed0e7904e0dd&query=${address}`;
     fetch(Url,
         {
-            method: "PUT",
+            method: "GET",
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'access_token': `${access_token}`
-            },
-            body: JSON.stringify(objfetch)
-        })
-        .then(res => res.json())
-        .then(response => {
-
-            successAction(response)
-
-        })
-        .catch(error => {
-            console.log(error)
-        });
-}
-export function DeleteUser(id,access_token,successAction) {
-    const Url = `${SERVER_BASE_URL}/customers/${id}`;
-    fetch(Url,
-        {
-            method: "DELETE",
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'access_token': `${access_token}`
             },
         })
         .then(res => res.json())

@@ -55,7 +55,7 @@ class MainScreen extends React.Component{
                 gestureEnabled:true,
                 gestureDirection:'horizontal',
                 ...TransitionPresets.ModalSlideFromBottomIOS,
-                title:'Sự kiện trong ngày',
+                headerShown: false,
               }}
             />
           </Stack.Navigator>

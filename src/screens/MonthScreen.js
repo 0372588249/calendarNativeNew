@@ -9,27 +9,26 @@ import moment from 'moment';
 import 'moment-lunar';
 import { CalendarList } from 'react-native-calendars';
 import { LocaleConfig } from 'react-native-calendars';
-import { color } from 'react-native-reanimated';
 
 LocaleConfig.locales['en'] = {
   formatAccessibilityLabel: "dddd d 'of' MMMM 'of' yyyy",
   monthNames: [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
+    'Tháng Một',
+    'Tháng Hai',
+    'Tháng Ba',
+    'Tháng Tư',
+    'Tháng Năm',
+    'Tháng Sáu',
+    'Tháng Bảy',
+    'Tháng Tám',
+    'Tháng Chín',
+    'Tháng Mười',
+    'Tháng Mười Một',
+    'Tháng Mười Hai'
   ],
-  monthNamesShort: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
-  dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-  dayNamesShort: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+  monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+  dayNames: ['CN', 'Hai', 'Ba', 'Tư', 'Năm', 'Sáu', 'Bảy'],
+  dayNamesShort: ['CN', 'Hai', 'Ba', 'Tư', 'Năm', 'Sáu', 'Bảy'],
 
 };
 
@@ -40,19 +39,20 @@ class ListMonthScreen extends React.Component {
 
     let count = 1;
     return (
-      <CalendarList
+      <View style={styles.container}>
+        <CalendarList
         renderHeader={(date) => {
-          let time = moment(date);
-          return(
-            <View style ={styles.header}>
+          return (
+            <View style={styles.header}>
               <Text style={styles.textHeader}>
-                Tháng {time.month() + 1} - {time.year()}
+                Tháng {date.getMonth() + 1} - {date.getFullYear()}
               </Text>
             </View>
           );
         }}
-        
+
         dayComponent={({ date, state }) => {
+          
 
           const getLunarDay = () => {
             let d = date.day;
@@ -60,21 +60,48 @@ class ListMonthScreen extends React.Component {
             let y = date.year;
             let value = moment().year(y).month(m).date(d).lunar().subtract(1, 'days').format('DD');
             if (value == 1) {
-              value = moment().year(y).month(m).date(d).lunar().subtract(1, 'days').format('MM') + '/' + value;
+              value = moment().year(y).month(m).date(d).lunar().subtract(1, 'days').subtract(1, 'months').format('MM') + '/' + value;
             }
             return value;
           }
-        
-          const isSunday = (dt) => {
-            let dayOfWeek = new Date(dt.year,dt.month,dt.day).getDay();
-            //console.log(dayOfWeek);
-            if (dayOfWeek == 0) {
-              console.log(dayOfWeek,new Date(dt.year,dt.month,dt.day));
-              return true;
+
+          const  getColorDay = () => {
+            
+            let today = moment();
+            let dayOfWeek = new Date(date.year, date.month, date.day).getDay();
+            if (dayOfWeek == 1) {
+              console.log(dayOfWeek, new Date(date.year, date.month, date.day));
+              return 'red';
             }
-            return false;
+            else if (date.day == today.date()
+              && date.month == today.month() + 1
+              && date.year == today.year()) {
+              return 'white';
+            }
+            return '';
           }
 
+
+         
+          /*
+          const  getColorDay2 = () => {
+            let today = moment();
+            let dayOfWeek = new Date(date.year, date.month, date.day).getDay();
+            if (dayOfWeek == 1) {
+              console.log(dayOfWeek, new Date(date.year, date.month, date.day));
+              return 'red';
+            }
+            else if (date.day == today.date()
+              && date.month == today.month() + 1
+              && date.year == today.year()) {
+              return 'white';
+            }
+            return '';
+          }
+          async function gcl(){
+            return await getColorDay2();
+          }
+          */
           const isToday = () => {
             let today = moment();
             if (date.day == today.date()
@@ -86,18 +113,18 @@ class ListMonthScreen extends React.Component {
           }
           return (
             <TouchableOpacity style={[styles.containerDate, { backgroundColor: isToday() == true ? '#4f6386' : '' }]}
-              onPress={()=>{
+              onPress={() => {
                 /**
                  * do some thing
                  */
-                if(this.props.navigation != null){
-                  this.props.navigation.navigate('DetailDate',{
-                    time : date
+                if (this.props.navigation != null) {
+                  this.props.navigation.navigate('DetailDate', {
+                    time: date
                   })
                 }
               }}
             >
-<Text style={[styles.dateText, { color: state === 'disabled' ? 'gray' : 'black' }, { color: isSunday(date) ? '#e75802' : 'black' }]}>
+              <Text style={[styles.dateText, { color: state === 'disabled' ? 'gray' :getColorDay() }]}>
                 {date.day}
               </Text>
               <Text style={styles.lunarText}>
@@ -113,23 +140,14 @@ class ListMonthScreen extends React.Component {
         style={{ borderBottomWidth: 1, borderBottomColor: 'black' }}
         firstDay={1}
         style={styles.listCalendar}
-
         calendarHeight={400}
         calendarWidth={'95%'}
         theme={{
-          marginTop:150,
-          marginHorizontal:150,
-          backgroundColor: 'red',
-          calendarBackground: '#ffffff',
+          marginTop: 150,
+          calendarBackground: 'white',
           textSectionTitleColor: 'white',
           textSectionTitleDisabledColor: 'gray',
-          dayTextColor: 'red',
-          todayTextColor: 'white',
-          selectedDayTextColor: 'white',
-          monthTextColor: 'white',
-          indicatorColor: 'white',
-          marginTop:150,
-          
+          backgroundColor:'red',
           // textDisabledColor: 'red',
           'stylesheet.calendar.header': {
             week: {
@@ -137,30 +155,42 @@ class ListMonthScreen extends React.Component {
               marginHorizontal: 12,
               flexDirection: 'row',
               justifyContent: 'space-around',
-              backgroundColor:'#7c867c',
-              borderRadius:20,
-              width:'100%',
-              marginLeft:'0%',
+              backgroundColor: '#c9c1bc',
+              borderRadius: 20,
+              width: '100%',
+              marginLeft: '0%',
             },
             headerContainer: {
               flexDirection: 'row',
-              backgroundColor:'red',
+              backgroundColor: '#3a524e',
+              width:'110%',
+              marginLeft:'-5%',
+              justifyContent:'center',
+              alignItems:'center',
+              height:'180%',
+              borderTopLeftRadius:10,
+              borderTopRightRadius:10,
             },
           }
         }}
       />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  header:{
+  container:{
+    backgroundColor:'blue',
   },
-  textHeader:{
-    fontSize:18,
-    color:'white',
+  header: {
+  },
+  textHeader: {
+    fontSize: 18,
+    color: 'white',
   },
   listCalendar: {
+    backgroundColor:'gray',
   },
   text: {
     textAlign: 'center',

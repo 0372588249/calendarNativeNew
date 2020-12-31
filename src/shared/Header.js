@@ -171,7 +171,6 @@ class Header extends React.Component{
                 <DateTimePickerModal
                     display="spinner"
                     isVisible={this.state.isSelectDob}
-                    // maximumDate={new Date()}
                     date={new Date()}
                     onConfirm={(date) => this._handleConfirmDob(date)}
                     onCancel={(date) => this._hideSelectDob(date)}

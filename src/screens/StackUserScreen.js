@@ -14,7 +14,6 @@ export default class StackUserScreen extends React.Component{
                     {
                         gestureEnabled:true,
                         gestureDirection:'horizontal',
-                        ...TransitionPresets.ModalSlideFromBottomIOS
                     }
                 }
             >

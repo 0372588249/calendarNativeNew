@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import moment from 'moment';
-import DataInfoManager from '../DataManager/DataInfoManager';
 import asset from '../asset';
-
+import DataInfoManager from '../DataManager/DataInfoManager';
 const dataInfoManager = DataInfoManager.getDataInfoManagerInstance();
 
 export default class UserInfo extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            dataInfo:{
-                name: "Nguyen Van A",
-                phone_number: "0327921777",
-                dob: "09/09/1998",
-                gender: 2,
-                address: "Ha Noi",
-                email: "hadsh@gmail.com",
-                method_login: [],
-            },
-            profile:[],
+            profile: {},
         };
     }
     componentDidMount(){
+        dataInfoManager.addObserver(this);
         var userInfo = dataInfoManager.getDataInfo()
-        this.setState({profile:userInfo})
+        this.setState({profile: userInfo})
     }
+    // shouldComponentUpdate(){
+        
+
+    
     render(){
-        const{profile}=this.state
+        const {profile} = this.state
+        const dateTime = moment(profile.dob).format("DD-MM-YYYY")
         return (
             <View style={styles.wrapper}>
                 <View style={styles.header}>
@@ -35,7 +31,8 @@ export default class UserInfo extends React.Component {
                         <Image source={asset.icons.menu} style={styles.backIconStyle} />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Tài khoản của tôi</Text>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("ChangeInfo")}>
+                    <TouchableOpacity 
+                    onPress={() => this.props.navigation.navigate('ChangeInfo')}>
                         <Text style={styles.txt_edit}>Sửa</Text>
                     </TouchableOpacity>
                 </View>
@@ -45,12 +42,8 @@ export default class UserInfo extends React.Component {
                         <Text style={styles.txt_name}>{profile.full_name}</Text>
                     </View>
                     <View style={styles.view_element}>
-                        <Text style={styles.txt_hoten}>Số điện thoại</Text>
-                        <Text style={styles.txt_name}>{profile.phone_number}</Text>
-                    </View>
-                    <View style={styles.view_element}>
                         <Text style={styles.txt_hoten}>Ngày sinh</Text>
-                        <Text style={styles.txt_name}>{profile.dob}</Text>
+                        <Text style={styles.txt_name}>{dateTime}</Text>
                     </View>
                     <View style={styles.view_element}>
                         <Text style={styles.txt_hoten}>Giới tính</Text>
@@ -59,10 +52,6 @@ export default class UserInfo extends React.Component {
                     <View style={styles.view_element}>
                         <Text style={styles.txt_hoten}>Địa chỉ</Text>
                         <Text style={styles.txt_name}>{profile.address}</Text>
-                    </View>
-                    <View style={styles.view_element}>
-                        <Text style={styles.txt_hoten}>Email</Text>
-                        <Text style={styles.txt_name}>{profile.email}</Text>
                     </View>
                 </View>
             </View>

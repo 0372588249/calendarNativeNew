@@ -308,15 +308,15 @@ class Footer extends React.Component{
         }
 
         switch(month){
-            case '1': result = canM[0] + ' ' + chiM[0] ;break;
-            case '2': result = canM[1] + ' ' + chiM[1] ;break;
-            case '3': result = canM[2] + ' ' + chiM[2] ;break;
-            case '4': result = canM[3] + ' ' + chiM[3] ;break;
-            case '5': result = canM[4] + ' ' + chiM[4] ;break;
-            case '6': result = canM[5] + ' ' + chiM[5] ;break;
-            case '7': result = canM[6] + ' ' + chiM[6] ;break;
-            case '8': result = canM[7] + ' ' + chiM[7] ;break;
-            case '9': result = canM[8] + ' ' + chiM[8] ;break;
+            case '01': result = canM[0] + ' ' + chiM[0] ;break;
+            case '02': result = canM[1] + ' ' + chiM[1] ;break;
+            case '03': result = canM[2] + ' ' + chiM[2] ;break;
+            case '04': result = canM[3] + ' ' + chiM[3] ;break;
+            case '05': result = canM[4] + ' ' + chiM[4] ;break;
+            case '06': result = canM[5] + ' ' + chiM[5] ;break;
+            case '07': result = canM[6] + ' ' + chiM[6] ;break;
+            case '08': result = canM[7] + ' ' + chiM[7] ;break;
+            case '09': result = canM[8] + ' ' + chiM[8] ;break;
             case '10': result = canM[9] + ' ' + chiM[9] ;break;
             case '11': result = canM[0] + ' ' + chiM[10] ;break;
             case '12': result = canM[1] + ' ' + chiM[11] ;break;
@@ -420,6 +420,13 @@ class Footer extends React.Component{
 
 
 class DayScreen extends React.Component{
+
+    constructor() {
+        super();
+        this.state = { 
+            time: moment(),
+        };
+    }
     componentDidMount(){
     }
     render() {

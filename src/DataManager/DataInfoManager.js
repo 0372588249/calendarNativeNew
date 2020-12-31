@@ -1,12 +1,12 @@
+import { AsyncStorage } from "react-native";
+
 export default class DataInfoManager {
     static DataInfoManagerInstance = null;
     dataInfo = {
-        full_name:"Vu Hong KHiem",
-        phone_number: "0372588149",
-        dob:"20/2/2020",
-        gender:2,
-        address:"Nam Dinh",
-        email:"vukhiem@gmail.com",
+        full_name: "",
+        dob: "",   
+        gender: "",
+        address: "",
 
     };
     Observers = [];
@@ -30,21 +30,28 @@ export default class DataInfoManager {
         this.dataInfo = DataInfo;
         this.updateDataToLocal();
     }
-    
+
     deleteDataInfo() {
         this.dataInfo = {
-            
+
         }
         this.updateDataToLocal();
     }
     updateDataToLocal() {
-        // localStorage.removeItem("DataInfo")
-        // localStorage.setItem("DataInfo", JSON.stringify(this.DataInfo))
-        // this.listenChange()
+        AsyncStorage.removeItem("DataInfo",(error)=>{
+            if(error == null) {
+                AsyncStorage.setItem("DataInfo", JSON.stringify(this.dataInfo))
+            }
+        })
+        this.listenChange()
     }
     loadDataFromLocal() {
-        // this.rand = QuestionJson[(Math.random() * QuestionJson.length) | 0];
-        this.listenChange()
+        AsyncStorage.getItem("DataInfo", (error, result) => {
+            if(error == null){
+                this.dataInfo = JSON.parse(result)
+                this.listenChange()
+            }
+        })
     }
     listenChange() {
         this.Observers.map(

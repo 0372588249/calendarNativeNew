@@ -48,6 +48,19 @@ import calendarandclocktime from './icons/calendarandclocktime.png';
 import menu from './icons/menu.png';
 import Path192x from './icons/Path192x.png';
 import Path193x from './icons/Path193x.png';
+import songtu from './zodiac/songtu.png';
+import kimnguu from './zodiac/kimnguu.png';
+import thienbinh from './zodiac/thienbinh.png';
+import xunu from './zodiac/xunu.png';
+import baobinh from './zodiac/baobinh.png';
+import bachduong from './zodiac/bachduong.png';
+import bocap from './zodiac/bocap.png';
+import cugiai from './zodiac/cugiai.png';
+import maket from './zodiac/maket.png';
+import nhanma from './zodiac/nhanma.png';
+import songngu from './zodiac/songngu.png';
+import sutu from './zodiac/sutu.png';
+
 
 //images
 import _54 from './images/54.jpg';
@@ -72,6 +85,20 @@ const asset = {
         mail, map, maxi, message, midi, mini, party, phone, playground, search, playground0, search0, contact0, history_mua,
         logout, arrow_right, more_than, notebook_d, notebook_d2, bill, bill_2, man_user, cart_yel, setting, logout_3, telephone,
         arrow_down, cancel, tick, uncheck, check,plus,calendarandclocktime,menu,Path192x,Path193x,
+    },
+    iconZodiac: {
+        bachduong,
+        kimnguu,
+        songtu,
+        cugiai,
+        sutu,
+        xunu,
+        thienbinh,
+        bocap,
+        nhanma,
+        maket,
+        baobinh,
+        songngu
     },
     images: {
         _54, banner, fit, little, maxi_image, midi_image, mini_image, party_image, sp1, sp2, sp3, sp4, profile, sp5, view

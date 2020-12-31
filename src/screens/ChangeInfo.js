@@ -8,25 +8,30 @@ import { xoadauTV } from '../utils/xoadau';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { convertTimestampToDatetime } from '../utils/convertDateTime';
 import { isEmail } from '../utils/checkMail';
+import DataInfoManager from '../DataManager/DataInfoManager';
+const dataInfoManager = DataInfoManager.getDataInfoManagerInstance();
 
 const data_city = require('../asset/data/city.json');
 
 export default class ChangeInfo extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             dataCity: data_city, 
             onSelect_City: false, 
             optionSelected_City: false,
             isSelectDob: false, dob_show: "",
+            dataCityInfo:{},
             dataInfo: {
-                dob: "",
-                gender: 0,
-            }
-
+            },
         };
     }
-
+    componentDidMount(){
+        dataInfoManager.addObserver(this);
+        var userInfo = dataInfoManager.getDataInfo()
+        this.setState({dataInfo:userInfo})
+    }
     _closeModal = () => {
         this.setState({ onSelect_City: false })
     };
@@ -86,29 +91,41 @@ export default class ChangeInfo extends Component {
 
     _handleConfirmDob = (date) => {
         this.setState({ isSelectDob: false })
+        this.setState({ dataInfo: { ...this.state.dataInfo, dob: date.getTime() } });
     };
+    SaveChangeInfo = () => {
+        var userInfo = dataInfoManager.getDataInfo()
+        userInfo = this.state.dataInfo;
+        userInfo.address = this.state.optionSelected_City.defaultName;
+        console.log("userInfo",userInfo)
+        dataInfoManager.updateDataInfo(userInfo)
+        // setChange();
+        this.props.navigation.navigate('UserInfo');
+    }
     render() {
         const {wrapper, header, headerTitle, body,} = styles;
         const { dataInfo } = this.state;
         return (
             <View style={wrapper}>
                 <View style={header}>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                    <TouchableOpacity onPress={() => {
+                        this.props.navigation.goBack()
+                    }}>
                         <Image source={asset.icons.back} style={styles.backIconStyle} />
                     </TouchableOpacity>
                     <Text style={headerTitle}>Tài khoản của tôi</Text>
-                    <TouchableOpacity onPress={null}>
+                    <TouchableOpacity onPress={()=>this.SaveChangeInfo()}>
                         <Text style={styles.txt_edit}>Lưu</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={body}>
                     <View style={styles.view_element}>
                         <Text style={styles.txt_hoten}>Họ & tên</Text>
-                        <TextInput style={styles.inp_name} />
-                    </View>
-                    <View style={styles.view_element}>
-                        <Text style={styles.txt_hoten}>Số điện thoại</Text>
-                        <TextInput style={styles.inp_name} />
+                        <TextInput style={styles.inp_name} value={dataInfo.full_name} 
+                        onChangeText={(e) => {
+                            dataInfo.full_name = e
+                            this.setState({ dataInfo})
+                            }}/>
                     </View>
                     <TouchableWithoutFeedback onPress={() => this.setState({ isSelectDob: true })}>
                         <View style={styles.view_element}>
@@ -124,10 +141,6 @@ export default class ChangeInfo extends Component {
                             <TouchableWithoutFeedback onPress={() => this.setState({ dataInfo: { ...dataInfo, gender: 2 } })}><View style={styles.view_female}><Image style={styles.icon_check} source={dataInfo.gender == 2 ? asset.icons.check : asset.icons.uncheck} /><Text style={styles.inp_name}>Nữ</Text></View></TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={() => this.setState({ dataInfo: { ...dataInfo, gender: 1 } })}><View style={styles.view_male}><Image style={styles.icon_check} source={dataInfo.gender == 1 ? asset.icons.check : asset.icons.uncheck} /><Text style={styles.inp_name}>Nam</Text></View></TouchableWithoutFeedback>
                         </View>
-                    </View>
-                    <View style={styles.view_element}>
-                        <Text style={styles.txt_hoten}>Email</Text>
-                        <TextInput style={styles.inp_name} />
                     </View>
                     <TouchableWithoutFeedback onPress={() => this.setState({ onSelect_City: true })}>
                         <View style={styles.view_element}>

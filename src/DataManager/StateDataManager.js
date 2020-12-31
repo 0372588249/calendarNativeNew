@@ -23,7 +23,6 @@ export default class StateDataManager {
     }
     updateStateData(stateData) {
         this.stateData = stateData;
-        console.log("time",stateData);
         this.updateDataToLocal();
     }
     

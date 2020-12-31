@@ -1,18 +1,15 @@
 import React from 'react';
-import {
-    StyleSheet,
-    View,
-    Text,
-    Image,
-    FlatList,
-    TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, Text,
+        Image, FlatList, TouchableOpacity, } from 'react-native';
 import { Dimensions } from 'react-native';
 import { createStackNavigator, TransitionPresets, TransitionSpecs } from '@react-navigation/stack';
 import ZodiacToday from './ZodiacToday'
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import asset from '../asset';
+import ZodiacComponent from '../components/ZodiacComponent';
+import ConGiapComponent from '../components/ConGiapComponent';
+import ConGiapToday from './ConGiapToday';
 
 const Stack = createStackNavigator();
 
@@ -26,133 +23,150 @@ const ListZodiac = [
     {
         id: 1,
         name: 'Bach Duong',
-        image: require('../../assets/images/image-analysis.png'),
+        image: asset.iconZodiac.bachduong,
         time: '21/3 - 19/04',
     },
     {
         id: 2,
         name: 'Kim Nguu',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        image: asset.iconZodiac.kimnguu,
+        time: '20/04 - 20/05',
     },
     {
         id: 3,
         name: 'Song Tu',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        image: asset.iconZodiac.songtu,
+        time: '21/05 - 21/06',
     },
     {
         id: 4,
         name: 'Cu Giai',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        image: asset.iconZodiac.cugiai,
+        time: '22/06 - 22/07',
     },
     {
         id: 5,
         name: 'Su tu',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        image: asset.iconZodiac.sutu,
+        time: '23/07 - 22/08',
     },
     {
         id: 6,
         name: 'Xu nu',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        image: asset.iconZodiac.xunu,
+        time: '23/08 - 22/09',
     },
     {
         id: 7,
         name: 'Thien Binh',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        image: asset.iconZodiac.thienbinh,
+        time: '23/09 - 23/10',
     },
     {
         id: 8,
-        name: 'Bach Duong',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        name: 'Bo Cap',
+        image: asset.iconZodiac.bocap,
+        time: '24/10 - 22/11',
     },
     {
         id: 9,
-        name: 'Kim Nguu',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        name: 'Nham Ma',
+        image: asset.iconZodiac.nhanma,
+        time: '22/11 - 21/12',
     },
     {
         id: 10,
-        name: 'Song Tu',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        name: 'MA KẾT',
+        image: asset.iconZodiac.maket,
+        time: '22/12 - 19/01',
     },
     {
         id: 11,
-        name: 'Cu Giai',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        name: 'BẢO BÌNH',
+        image: asset.iconZodiac.baobinh,
+        time: '20/01 - 18/02',
     },
     {
         id: 12,
-        name: 'Su tu',
-        image: require('../../assets/images/image-analysis.png'),
-        time: '21/3 - 19/04',
+        name: 'SONG NGƯ',
+        image: asset.iconZodiac.songngu,
+        time: '19/02 - 20/03',
     },
 ];
-
-class ZodiacComponent extends React.Component {
-
-    render() {
-        return (
-            <TouchableOpacity style={styles.zodiacComponent}
-                onPress={() => {
-                    if (this.props.navigation != null) {
-                        /**
-                         * do some thing
-                         */
-                        if (this.props.navigation != null)
-                            this.props.navigation.navigate('ZodiacToday', {
-                                id: this.props.item.id,
-                            });
-                    }
-                }}
-            >
-                <Image style={styles.zodiacImage}
-                    source={this.props.item.image}
-                />
-                <Text style={styles.zodiacName}>
-                    {this.props.item.name}
-                </Text>
-                <Text style={styles.zodiacTime}>
-                    {this.props.item.time}
-                </Text>
-            </TouchableOpacity>
-        );
-    }
-}
-
-class TopButtonNaviagation extends React.Component {
-
-    render() {
-        return (
-            <TouchableOpacity
-                style={styles.topButtonNavigation}
-                onPress={() => {
-                    /**
-                     * do some thing
-                     */
-                    if (this.props.execute != null) {
-                        this.props.execute();
-                    }
-                }}
-            >
-                <Image
-                    style={[styles.imageTopButtonNavigation, this.props.tranform]}
-                    source={this.props.sourceIcon}
-                    tintColor='white'
-                />
-            </TouchableOpacity>
-        );
-    }
-}
-
+const ListConGiap = [
+    {
+        id: 1,
+        name: 'Ti',
+        image: asset.iconZodiac.bachduong,
+        time: '21/3 - 19/04',
+    },
+    {
+        id: 2,
+        name: 'Sửu',
+        image: asset.iconZodiac.kimnguu,
+        time: '20/04 - 20/05',
+    },
+    {
+        id: 3,
+        name: 'Dần',
+        image: asset.iconZodiac.songtu,
+        time: '21/05 - 21/06',
+    },
+    {
+        id: 4,
+        name: 'Mão',
+        image: asset.iconZodiac.cugiai,
+        time: '22/06 - 22/07',
+    },
+    {
+        id: 5,
+        name: 'Thìn',
+        image: asset.iconZodiac.sutu,
+        time: '23/07 - 22/08',
+    },
+    {
+        id: 6,
+        name: 'Tỵ',
+        image: asset.iconZodiac.xunu,
+        time: '23/08 - 22/09',
+    },
+    {
+        id: 7,
+        name: 'Ngọ',
+        image: asset.iconZodiac.thienbinh,
+        time: '23/09 - 23/10',
+    },
+    {
+        id: 8,
+        name: 'Mùi',
+        image: asset.iconZodiac.bocap,
+        time: '24/10 - 22/11',
+    },
+    {
+        id: 9,
+        name: 'Thân',
+        image: asset.iconZodiac.nhanma,
+        time: '22/11 - 21/12',
+    },
+    {
+        id: 10,
+        name: 'Dậu',
+        image: asset.iconZodiac.maket,
+        time: '22/12 - 19/01',
+    },
+    {
+        id: 11,
+        name: 'Tuất',
+        image: asset.iconZodiac.baobinh,
+        time: '20/01 - 18/02',
+    },
+    {
+        id: 12,
+        name: 'Hợi',
+        image: asset.iconZodiac.songngu,
+        time: '19/02 - 20/03',
+    },
+];
 class ButtonInNavigationArea extends React.Component {
     render() {
         return (
@@ -240,12 +254,12 @@ class ZodiacScreen extends React.Component {
                             }}
                         />
                         <ButtonInNavigationArea
-                            text="calendar"
+                            text="Con Giáp"
                             backColor={this.getBackgroundColorMonthButton()}
                             fontWeight={this.getFontWeightMonthButton()}
                             execute={() => {
                                 this.setState({ isDayClicked: false });
-                                this.props.navigation.navigate('Zodiac1Screen');
+                                this.props.navigation.navigate('ZodiacScreen');
                             }}
                         />
                     </View>
@@ -276,12 +290,12 @@ class ZodiacScreen extends React.Component {
                     </FlatList>
                 </View>:<View style={styles.drawContent}>
                     <Text style={styles.title}>
-                    calendar
+                    Con Giáp
                     </Text>
                     <FlatList style={styles.containerScrollZodiac}
-                        data={ListZodiac}
+                        data={ListConGiap}
                         renderItem={({ item }) => {
-                            return <ZodiacComponent item={item} navigation={this.props.navigation} />;
+                            return <ConGiapComponent item={item} navigation={this.props.navigation} />;
                         }}
                         keyExtractor={item => item.id}
                         numColumns='3'
@@ -303,7 +317,7 @@ class ZodiacScreen extends React.Component {
 class StackListZodiacScreen extends React.Component {
 
     render() {
-        ZodiacToday
+        ZodiacToday,ConGiapToday
         return (
             <Stack.Navigator
                 screenOptions={
@@ -316,6 +330,7 @@ class StackListZodiacScreen extends React.Component {
             >
                 <Stack.Screen name="ZodiacScreen" component={ZodiacScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="ZodiacToday" component={ZodiacToday} options={{ headerShown: false }} />
+                <Stack.Screen name="ConGiapToday" component={ConGiapToday} options={{ headerShown: false }} />
             </Stack.Navigator>
         );
     }
@@ -348,26 +363,6 @@ const styles = StyleSheet.create({
     rowItem: {
         flex: 1,
         justifyContent: 'space-around',
-    },
-    zodiacComponent: {
-        width: widthItemZodiac,
-        height: HeightItemZodiac,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: '6%',
-    },
-    zodiacImage: {
-        width: WidthImage,
-        height: HeightImage,
-        borderRadius: 50,
-        borderColor: 'silver',
-        borderWidth: 2,
-    },
-    zodiacName: {
-        color: '#ff7654',
-    },
-    zodiacTime: {
-
     },
     header: {
         width: '94%',
